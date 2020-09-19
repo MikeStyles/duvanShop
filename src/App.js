@@ -1,25 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React  from 'react';
+import Principal from './components/principal';
+import Producto from './components/producto'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="conatiner mt-2">
+        <div className="btn-group">
+          <Link to="/" className="btn btn-dark">
+            Inicio
+          </Link>
+        </div>
+        <h1>
+          Duvan Shop
+        </h1>
+        <hr/>
+        <Switch>
+          <Route path="/productos/:id"> 
+            <Producto/>
+          </Route>
+          <Route path="/">
+            <Principal/>
+          </Route>
+        </Switch>
+      </div>
+
+    </Router>
   );
 }
 
