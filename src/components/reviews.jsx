@@ -17,11 +17,11 @@ const Reviews = (props) => {
         };
         setReviews(rvw);
       });
-  }, []);
+  }, );
 
   return (
     <div className="text">
-      {reviews.reviews != undefined ? (
+      {reviews.reviews !== undefined ? (
         <div>
           {reviews.reviews.map((rvw) => (
             <div key={rvw.id}>

@@ -5,11 +5,10 @@ import Reviews from "./reviews";
 const Producto = () => {
   const { id } = useParams();
   const [product, setProduct] = React.useState([]);
-  const [reviews, setReviews] = React.useState([]);
 
   React.useEffect(() => {
     obtenerProductos();
-  }, []);
+  }, );
 
   const obtenerProductos = async () => {
     await fetch(`https://api.mercadolibre.com/items/${id}`, {
@@ -31,21 +30,7 @@ const Producto = () => {
       });
   };
 
-  const obtenerReviews = async () => {
-    await fetch(`https://api.mercadolibre.com/reviews/item/${id}`, {
-      mode: "cors",
-    })
-      .then(function (consult) {
-        return consult.json();
-      })
-      .then(function (reviewsJson) {
-        let rvw = {
-          rating_average: reviewsJson.rating_average,
-          reviews: reviewsJson.reviews,
-        };
-        setReviews(rvw);
-      });
-  };
+ 
 
   return (
     <div>
@@ -75,7 +60,7 @@ const Producto = () => {
         </div>
       </div>
       <div className="card-deck">
-        {product.id != undefined ? (
+        {product.id !== undefined ? (
           <div>
             <Reviews id={product.id} />
             {console.log("Entro", product.id )}
