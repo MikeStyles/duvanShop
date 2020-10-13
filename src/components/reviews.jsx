@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 const Reviews = (props) => {
   const [reviews, setReviews] = useState([]);
 
+  
   useEffect(() => {
     fetch(`https://api.mercadolibre.com/reviews/item/${props.id}`, {
       mode: "cors",
