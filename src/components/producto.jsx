@@ -2,16 +2,16 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import Reviews from "./reviews";
 
-const Product = () => {
+const Producto = () => {
   const { id } = useParams();
   const [product, setProduct] = React.useState([]);
   const [reviews, setReviews] = React.useState([]);
 
   React.useEffect(() => {
-    obtenerProducts();
+    obtenerProductos();
   }, []);
 
-  const obtenerProducts = async () => {
+  const obtenerProductos = async () => {
     await fetch(`https://api.mercadolibre.com/items/${id}`, {
       mode: "cors",
     })
@@ -31,7 +31,6 @@ const Product = () => {
       });
   };
 
-  //https://api.mercadolibre.com/reviews/item/
   const obtenerReviews = async () => {
     await fetch(`https://api.mercadolibre.com/reviews/item/${id}`, {
       mode: "cors",
@@ -89,4 +88,4 @@ const Product = () => {
   );
 };
 
-export default Product;
+export default Producto;
