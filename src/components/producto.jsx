@@ -63,7 +63,7 @@ const Producto = () => {
               <label> $ {product.price}</label>
               <hr />
               <label>
-                Descuento del:{" "}
+                Posee un descuento del: {" "}
                 {Math.trunc((product.price / product.originalPrice) * 100)}%
               </label>
             </div>
