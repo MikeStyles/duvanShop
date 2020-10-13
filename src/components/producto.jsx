@@ -1,45 +1,92 @@
-import React, {useState, useEffect} from 'react';
+import React from "react";
+import { useParams } from "react-router-dom";
+import Reviews from "./reviews";
 
-import { useParams} from "react-router-dom";
+const Product = () => {
+  const { id } = useParams();
+  const [product, setProduct] = React.useState([]);
+  const [reviews, setReviews] = React.useState([]);
 
-const Producto = () =>{
+  React.useEffect(() => {
+    obtenerProducts();
+  }, []);
 
-  const [producto,setProducto] = useState([])
+  const obtenerProducts = async () => {
+    await fetch(`https://api.mercadolibre.com/items/${id}`, {
+      mode: "cors",
+    })
+      .then(function (consult) {
+        return consult.json();
+      })
+      .then(function (productJson) {
+        let new_obj = {
+          id: productJson.id,
+          tittle: productJson.title,
+          imgMain: productJson.pictures[0].url,
+          thumbnail: productJson.thumbnail,
+          price: productJson.price,
+          originalPrice: productJson.original_price,
+        };
+        setProduct(new_obj);
+      });
+  };
 
-  const {id} = useParams()  
+  //https://api.mercadolibre.com/reviews/item/
+  const obtenerReviews = async () => {
+    await fetch(`https://api.mercadolibre.com/reviews/item/${id}`, {
+      mode: "cors",
+    })
+      .then(function (consult) {
+        return consult.json();
+      })
+      .then(function (reviewsJson) {
+        let rvw = {
+          rating_average: reviewsJson.rating_average,
+          reviews: reviewsJson.reviews,
+        };
+        setReviews(rvw);
+      });
+  };
 
-  useEffect(() => {
-      obetenerProducto()
-  },)
-  
-  const obetenerProducto= async () =>{
-        const data = await fetch(`https://api.mercadolibre.com/items/${id}`)
-        const {resultados} = await data.json()
-        setProducto(resultados)
-        
-    }
-  return(
+  return (
     <div>
-      {
-        producto.map(item =>(
+      <h1>{product.tittle}</h1>
+      <div className="card-deck">
+        <div className="cards">
+          <img src={product.imgMain} alt="" />
+        </div>
+        <div className="vl"></div>
+        <div className="cards">
+          {product.originalPrice != null ? (
+            <div>
+              <span className="tachado">$ {product.originalPrice}</span>
+              <hr />
+              <label> $ {product.price}</label>
+              <hr />
+              <label>
+                Descuento del:{" "}
+                {Math.trunc((product.price / product.originalPrice) * 100)}%
+              </label>
+            </div>
+          ) : (
+            <div>
+              <label>$ {product.price}</label>
+            </div>
+          )}
+        </div>
+      </div>
+      <div className="card-deck">
+        {product.id != undefined ? (
           <div>
-          <img 
-            src={item.thumbnail}
-            width="100"
-            height="100"
-            alt="No se encontro imagen"
-            />
-          <h3>{item.title}</h3>
+            <Reviews id={product.id} />
+            {console.log("Entro", product.id )}
           </div>
+        ) : (
+          <div></div>
+        )}
+      </div>
+    </div>
+  );
+};
 
-        )
-
-        )
-      }
-    </div>  
-
-  )
-    
-  
-}
-export default Producto
+export default Product;
