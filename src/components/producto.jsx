@@ -6,6 +6,7 @@ const Producto = () => {
   const { id } = useParams();
   const [product, setProduct] = React.useState([]);
 
+  
   React.useEffect(() => {
     obtenerProductos();
   }, );
